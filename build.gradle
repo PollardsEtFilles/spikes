@@ -1,0 +1,9 @@
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.5'
+}
+
+allprojects {
+    apply plugin: 'java'
+}
+
