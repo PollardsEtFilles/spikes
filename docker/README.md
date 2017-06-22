@@ -1,4 +1,5 @@
 
+## Install Docker
 Download and install docker for mac
 https://docs.docker.com/docker-for-mac/install/#download-docker-for-mac
 choose stable
@@ -58,3 +59,10 @@ as requirements-test.txt Python dependency file, but we reference the Docker fil
 in a sub directory with the `-f` option.
 This is needed because Docker files cannot use resources in the parent directory
 so `ADD ../requirements-test.txt ...` is not allowed on the Docker file.
+
+## References
+https://circleci.com/blog/it-really-is-the-future/
+https://circleci.com/blog/its-the-future/
+http://hokstad.com/docker/patterns
+https://docs.docker.com
+https://docs.continuum.io/anaconda/pkg-docs
