@@ -1,0 +1,25 @@
+version: "3"
+services:
+    behave:
+        image: pef/python3
+        command: "behave src/test/features"
+        volumes:
+            - .:/code
+        environment:
+            - PYTHONPATH=/code/src/main/python:/code/src/test/python
+
+    pytest:
+        image: pef/python3
+        command: "pytest -v"
+        volumes:
+            - .:/code
+        environment:
+            - PYTHONPATH=/code/src/main/python:/code/src/test/python
+
+    bash:
+        image: pef/python3
+        command: "bash"
+        volumes:
+            - .:/code
+        environment:
+            - PYTHONPATH=/code/src/main/python:/code/src/test/python
