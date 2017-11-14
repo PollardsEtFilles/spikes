@@ -10,7 +10,7 @@ import pytest
 def state():
     return dict()
 
-@scenario('../pytest_feature/source.feature', 'Read a shell file into a Source class')
+@scenario('../source.feature', 'Read a shell file into a Source class')
 def test_publish():
     pass
 

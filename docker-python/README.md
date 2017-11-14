@@ -13,6 +13,14 @@ To run both Python and pytest and behave feature files
 ../gradlew testall
 ```
 
+## Testing Framework in PEF
+We choose pybehave because:
+* the output is more readable
+* there is less magic with fixtures
+
+but don't like:
+* steps have to be next to fixtures so less flexible
+
 ## References
 https://docs.pytest.org/en/latest/index.html
 https://docs.pytest.org/en/latest/contents.html#toc

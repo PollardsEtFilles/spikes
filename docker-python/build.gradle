@@ -1,43 +1,42 @@
 
 
+task pyLocalInstall(type: Exec) {
+    workingDir '.'
+    commandLine 'pip', 'install', '--upgrade', 'src/main/python'
+}
+
+task pyLocalSimpleTest(type: Exec, dependsOn: pyLocalInstall) {
+    workingDir '.'
+    commandLine 'python3', 'src/test/python/test_source.py'
+}
+
 task pytest(type: Exec) {
     println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
     def xunit = (System.properties['user.name'].equals("jenkins")) ? "--junitxml=${buildDir}/reports/pytest.xml" : ""
-    //def xunit = "--junitxml=./build/reports/pytest.xml"
-    def pypath = "PYTHONPATH=./src/main/python:./src/test/python"
+    def pypath = "PYTHONPATH=./src/main/python:./src/test/pytest_feature/steps"
+
     workingDir '.'
-    // each part of the command line must be in a separate arg
-    // so for example 'run -1' does not work
     commandLine '/usr/local/bin/docker',
             'run',
-            '-e',
-            pypath,
-            '-v',
-            "${projectDir}/:/code/",
-            '-i',
-            'pef/python3',
+            '-e', pypath,
+            '-v', "${projectDir}/:/code/",
+            '-i', 'pef/python3',
             'pytest',
             xunit
-    //println commandLine
 }
 pytest.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
 
-task pybehave(type: Exec) {
+    task pybehave(type: Exec) {
     println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
     def xunit = (System.properties['user.name'].equals("jenkins")) ? "--junitxml=${buildDir}/reports/pybehave.xml" : ""
     //def xunit = "--junitxml=./build/reports/pytest.xml"
     def pypath = "PYTHONPATH=./src/main/python:./src/test/python"
     workingDir '.'
-    // each part of the command line must be in a separate arg
-    // so for example 'run -1' does not work
     commandLine '/usr/local/bin/docker',
             'run',
-            '-e',
-            pypath,
-            '-v',
-            "${projectDir}/:/code/",
-            '-i',
-            'pef/python3',
+            '-e', pypath,
+            '-v', "${projectDir}/:/code/",
+            '-i', 'pef/python3',
             'behave',
             'src/test/features'
             //'--junit'
@@ -52,13 +51,10 @@ task testdocker(type: Exec) {
     workingDir '.'
     commandLine '/usr/local/bin/docker',
             'run',
-            '-v',
-            "${projectDir}:/code/",
-            '-i',
-            'pef/python3',
+            '-v', "${projectDir}:/code/",
+            '-i', 'pef/python3',
             'bash',
-            '-c',
-            'pwd'
+            '-c', 'pwd'
 //            '/code/command.sh'
 }
 

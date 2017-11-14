@@ -12,3 +12,6 @@ def test_source():
     asource = Source('src/test/env/env.sh')
     assert 'some env' in asource.atestenv
     assert 'some env2' in asource.atestenv2
+
+if __name__ == '__main__':
+    test_source()

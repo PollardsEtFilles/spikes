@@ -7,7 +7,7 @@ import pytest
 def test_state():
     return dict()
 
-@scenario('../pytest_feature/behave.feature', 'run a simple test')
+@scenario('../behave.feature', 'run a simple test')
 def test_behave():
     pass
 
