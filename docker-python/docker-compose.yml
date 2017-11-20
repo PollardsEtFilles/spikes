@@ -1,12 +1,23 @@
 version: "3"
 services:
+    pypi:
+        image: pef/pypi
+        volumes:
+            - ~/pypi:/srv/pypi:rw
+        ports:
+            - 8080:80
+
     behave:
+        depends_on:
+            - pypi
         image: pef/python3
-        command: "behave src/test/features"
+        command: "behave src/test/python/features"
         volumes:
             - .:/code
+#            - pip:~/.pip
         environment:
             - PYTHONPATH=/code/src/main/python:/code/src/test/python
+            - PIP_EXTRA_INDEX_URL=http://pypi:80/simple/
 
     pytest:
         image: pef/python3
@@ -15,11 +26,23 @@ services:
             - .:/code
         environment:
             - PYTHONPATH=/code/src/main/python:/code/src/test/python
+            - PIP_EXTRA_INDEX_URL=http://pypi:80/simple/
 
-    bash:
+    main:
         image: pef/python3
-        command: "bash"
+        depends_on:
+            - pypi
+        command: "/code/upload_internal.sh"
         volumes:
-            - .:/code
+            - ./src/main/python:/code
+
+    test:
+        image: pef/python3
+        depends_on:
+            - pypi
+        command: "/code/test.sh"
+        volumes:
+            - ./src/test/python:/code
+            - ./src/test/env:/code/env
         environment:
-            - PYTHONPATH=/code/src/main/python:/code/src/test/python
+            - PIP_EXTRA_INDEX_URL=http://pypi:80/simple/

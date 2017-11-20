@@ -1,0 +1,10 @@
+
+[distutils]
+index-servers =
+    internal
+
+[internal]
+repository:http://pypi:80
+username:root
+password:docker
+

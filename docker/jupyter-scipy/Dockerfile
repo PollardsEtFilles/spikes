@@ -6,7 +6,7 @@ WORKDIR /code/
 
 RUN pip install --upgrade pip
 
-ADD jupyter-scipy/requirements.txt /code/requirements.txt
+ADD requirements.txt /code/requirements.txt
 RUN pip install -r requirements.txt
 
 ADD requirements-test.txt /code/requirements-test.txt
