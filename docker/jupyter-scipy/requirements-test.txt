@@ -1,0 +1,6 @@
+pytest==3.1.0
+pytest-bdd==2.18.2
+behave==1.2.5
+behave-pytest==0.1.1
+behave-generator==0.1.0
+behave-selenium==0.0.1
