@@ -1,5 +1,5 @@
 
-from source import Source
+from pef.source import Source
 from behave import *
 
 

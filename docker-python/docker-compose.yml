@@ -40,9 +40,10 @@ services:
         image: pef/python3
         depends_on:
             - pypi
-        command: "/code/test.sh"
+        command: "/code/src/test/python/test.sh"
         volumes:
-            - ./src/test/python:/code
-            - ./src/test/env:/code/env
+            - .:/code
+#            - ./src/test/python:/code
+#            - ./src/test/env:/code/env
         environment:
             - PIP_EXTRA_INDEX_URL=http://pypi:80/simple/

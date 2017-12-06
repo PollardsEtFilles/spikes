@@ -13,48 +13,55 @@ task pyLocalSimpleTest(type: Exec, dependsOn: pyLocalInstall) {
 task pytest(type: Exec) {
     println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
     def xunit = (System.properties['user.name'].equals("jenkins")) ? "--junitxml=${buildDir}/reports/pytest.xml" : ""
-    def pypath = "PYTHONPATH=./src/main/python:./src/test/pytest_feature/steps"
+    def pypath = "PYTHONPATH=./src/main/python"
 
     workingDir '.'
-    commandLine '/usr/local/bin/docker',
+    commandLine 'docker',
             'run',
             '-e', pypath,
             '-v', "${projectDir}/:/code/",
             '-i', 'pef/python3',
-            'pytest',
-            xunit
+            'pytest'
+            //xunit
 }
 pytest.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
 
-    task pybehave(type: Exec) {
+task behave(type: Exec) {
     println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
     def xunit = (System.properties['user.name'].equals("jenkins")) ? "--junitxml=${buildDir}/reports/pybehave.xml" : ""
     //def xunit = "--junitxml=./build/reports/pytest.xml"
-    def pypath = "PYTHONPATH=./src/main/python:./src/test/python"
+    def pypath = "PYTHONPATH=./src/main/python"
     workingDir '.'
-    commandLine '/usr/local/bin/docker',
+    commandLine 'docker',
             'run',
             '-e', pypath,
             '-v', "${projectDir}/:/code/",
             '-i', 'pef/python3',
             'behave',
-            'src/test/features'
+            'src/test/python/features'
             //'--junit'
-    //println commandLine
 }
-pybehave.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
+behave.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
 
-task testall(type: Test, dependsOn:[pybehave, pytest])
+task testall(type: Test, dependsOn:[behave, pytest])
 
 
-task testdocker(type: Exec) {
+task pypiclear(type:Exec) {
     workingDir '.'
-    commandLine '/usr/local/bin/docker',
+    commandLine 'bash', '-c', "rm -f ~/pypi/pef.source-0.0.1.tar.gz"
+}
+
+task dockermain(type: Exec) {
+    workingDir '.'
+    commandLine 'docker-compose',
             'run',
-            '-v', "${projectDir}:/code/",
-            '-i', 'pef/python3',
-            'bash',
-            '-c', 'pwd'
-//            '/code/command.sh'
+            'main'
+}
+
+task dockertest(type: Exec, dependsOn: dockermain) {
+    workingDir '.'
+    commandLine 'docker-compose',
+            'run',
+            'test'
 }
 

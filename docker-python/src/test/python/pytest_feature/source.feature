@@ -8,5 +8,10 @@ Feature: Source
 
     Examples:
       | file         | prop       | expected   |
-      | env/env.sh   | atestenv   | some env   |
-      | env/env.sh   | atestenv2  | some env2  |
+      | src/test/env/env.sh   | atestenv   | some env   |
+      | src/test/env/env.sh   | atestenv2  | some env2  |
+
+#    Examples:
+#      | file         |
+#      | ../env/env.sh   |
+#      | ../env/env.sh   |
