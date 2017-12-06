@@ -7,11 +7,6 @@ Feature: Source
     Then Source.<prop> should equal <expected>
 
     Examples:
-      | file         | prop       | expected   |
-      | src/test/env/env.sh   | atestenv   | some env   |
-      | src/test/env/env.sh   | atestenv2  | some env2  |
-
-#    Examples:
-#      | file         |
-#      | ../env/env.sh   |
-#      | ../env/env.sh   |
+      | file                 | prop       | expected   |
+      | src/test/env/env.sh  | atestenv   | some env   |
+      | src/test/env/env.sh  | atestenv2  | some env2  |
