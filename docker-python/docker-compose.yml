@@ -14,7 +14,6 @@ services:
         command: "behave src/test/python/features"
         volumes:
             - .:/code
-#            - pip:~/.pip
         environment:
             - PYTHONPATH=/code/src/main/python:/code/src/test/python
             - PIP_EXTRA_INDEX_URL=http://pypi:80/simple/

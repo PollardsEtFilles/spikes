@@ -12,24 +12,22 @@ task pyLocalSimpleTest(type: Exec, dependsOn: pyLocalInstall) {
 
 task pytest(type: Exec) {
     println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
-    def xunit = (System.properties['user.name'].equals("jenkins")) ? "--junitxml=${buildDir}/reports/pytest.xml" : ""
     def pypath = "PYTHONPATH=./src/main/python"
-
     workingDir '.'
     commandLine 'docker',
             'run',
             '-e', pypath,
             '-v', "${projectDir}/:/code/",
             '-i', 'pef/python3',
-            'pytest'
-            //xunit
+            'pytest',
+            "-v",
+            "--gherkin-terminal-reporter", "-vv",
+            "--junit-xml", "reports/pytest.xml"
 }
 pytest.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
 
 task behave(type: Exec) {
     println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
-    def xunit = (System.properties['user.name'].equals("jenkins")) ? "--junitxml=${buildDir}/reports/pybehave.xml" : ""
-    //def xunit = "--junitxml=./build/reports/pytest.xml"
     def pypath = "PYTHONPATH=./src/main/python"
     workingDir '.'
     commandLine 'docker',
@@ -38,13 +36,14 @@ task behave(type: Exec) {
             '-v', "${projectDir}/:/code/",
             '-i', 'pef/python3',
             'behave',
-            'src/test/python/features'
-            //'--junit'
+            'src/test/python/features',
+            '--junit'
 }
 behave.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
 
 task testall(type: Test, dependsOn:[behave, pytest])
 
+test.dependsOn(testall)
 
 task pypiclear(type:Exec) {
     workingDir '.'
@@ -64,4 +63,3 @@ task dockertest(type: Exec, dependsOn: dockermain) {
             'run',
             'test'
 }
-
