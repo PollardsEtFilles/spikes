@@ -14,12 +14,12 @@ task pytest(type: Exec) {
     println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
     def pypath = "PYTHONPATH=./src/main/python"
     workingDir '.'
-    commandLine 'docker',
+    commandLine 'docker-compose',
             'run',
-            '-e', pypath,
-            '-v', "${projectDir}/:/code/",
-            '-i', 'pef/python3',
-            'pytest',
+//            '-e', pypath,
+//            '-v', "${projectDir}/:/code/",
+//            '-i', 'pef/python3',
+            'test',
             "-v",
             "--gherkin-terminal-reporter", "-vv",
             "--junit-xml", "reports/pytest.xml"

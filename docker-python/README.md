@@ -30,6 +30,12 @@ This project contains two sets of code following Java directory conventions that
 * src/test/python for test code and features
 
 
+## Download Database Import File
+cd docker-python
+curl https://codeload.github.com/datacharmer/test_db/zip/master -o master.zip
+unzip master.zip
+
+
 ## Running Python Tests
 First build the required images, these are:
 * ../docker/pypiserver/build.sh
@@ -47,6 +53,7 @@ docker-compose run main   | Build the Python module pef.source in src/main/pytho
 docker-compose run test   | Test the Python module pef.source downloaded from local pypi server with behave and pytest.
 docker-compose run behave | Run behave tests in a docker container. This test does not deploy a python package.
 docker-compose run pytest | Run pytest tests in a docker container. This test does not deploy a python package.
+
 
 ## Discussion
 The gradle scripts are configured to output junit style xml as well as human readable text output.

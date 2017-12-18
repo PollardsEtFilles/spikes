@@ -1,6 +1,7 @@
 
 import os
-from pef.source import Source
+from pefspike.source import Source
+from pefspike.db import Database
 
 
 def test_source():
