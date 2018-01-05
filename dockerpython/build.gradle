@@ -7,10 +7,10 @@ task pytestbdd(type: Exec) {
             'test',
             "bash",
             "-c",
-            "pip install --trusted-host pypi -r requirements-test.txt && pytest -v --gherkin-terminal-reporter -vv --junit-xml reports/pytest.xml pytest_feature"
+            "pip install --trusted-host pypi -r requirements-test.txt && pytest -v --gherkin-terminal-reporter -vv --junit-xml reports/pytest.xml pytest_features"
 
 }
-pytestbdd.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
+pytestbdd.onlyIf { file('src/main/python').isDirectory() && file('src/test/python/pytest_features').isDirectory() }
 
 task pytest(type: Exec) {
     println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
@@ -20,10 +20,9 @@ task pytest(type: Exec) {
             'test',
             "bash",
             "-c",
-            "pip install --trusted-host pypi -r requirements-test.txt && pytest -v --junit-xml reports/pytest.xml unit"
-
+            "pip install --trusted-host pypi --extra-index-url http://pypi:80/ -r requirements-test.txt && pytest -v --junit-xml reports/pytest.xml unit"
 }
-pytestbdd.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
+pytestbdd.onlyIf { file('src/main/python').isDirectory() && file('src/test/python/unit').isDirectory() }
 
 task behave(type: Exec) {
     println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
@@ -35,20 +34,38 @@ task behave(type: Exec) {
             "-c",
             "pip install --trusted-host pypi -r requirements-test.txt && behave --junit features --junit"
 }
-behave.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
+behave.onlyIf { file('src/main/python').isDirectory() && file('src/test/python/features').isDirectory() }
 
 task testall(type: Test, dependsOn:[pytest, behave, pytestbdd])
 
 test.dependsOn(testall)
 
+
+task buildmain(type: Exec) {
+    workingDir '.'
+    commandLine 'bash', '-c', 'docker-compose run main'
+}
+
+task buildapp(type: Exec) {
+    workingDir 'src/app/python'
+    commandLine 'bash', '-c', 'docker-compose start pypi && ./build.sh && docker-compose stop pypi'
+}
+
+
+task runapp(type: Exec) {
+    workingDir '.'
+    commandLine 'bash', '-c', 'docker run --rm pef/pefspikeapp'
+}
+
+
 task cleanmain(type:Exec) {
     workingDir 'src/main/python'
-    commandLine 'bash', '-c', "rm -f *.egg-info && rm -f dist"
+    commandLine 'bash', '-c', "rm -rf *.egg-info dist"
 }
 
 task cleantest(type:Exec) {
     workingDir 'src/test/python'
-    commandLine 'bash', '-c', "rm -f .cache"
+    commandLine 'bash', '-c', "rm -rf .cache reports"
 }
 
 task cleanapp(type:Exec) {
@@ -56,14 +73,7 @@ task cleanapp(type:Exec) {
     commandLine 'bash', '-c', "docker rmi pef/pefspikeapp"
 }
 
-task buildmain(type: Exec) {
-    workingDir '.'
-    commandLine 'docker-compose',
-            'run',
-            'main'
-}
-
-task buildapp(type: Exec) {
+task cleanpypi(type:Exec) {
     workingDir 'src/app/python'
-    commandLine './build.sh'
+    commandLine 'bash', '-c', "rm -rf ~/pypi/pefspike*"
 }

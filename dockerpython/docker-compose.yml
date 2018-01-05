@@ -34,7 +34,7 @@ services:
         volumes:
              - ./src/test/python:/code
         environment:
-            - PIP_EXTRA_INDEX_URL=http://pypi:80/simple/
+            - PIP_EXTRA_INDEX_URL=http://pypi:80/
 
     # can't build app here as pypi does not get started during a build
     # need to have pypi running and use standard Docker build
