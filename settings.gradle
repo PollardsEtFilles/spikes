@@ -1,3 +1,3 @@
 
 rootProject.name = "spike"
-include 'docker-python'
+include 'dockerpython'

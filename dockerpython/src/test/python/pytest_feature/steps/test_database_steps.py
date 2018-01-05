@@ -15,15 +15,6 @@ def test_context():
 def test_create_a_database_connection():
     pass
 
-# @given('a "employee" database on host "db" user "root" passwd "password"')
-# def a_employee_database_on_host_db_user_root_passwd_password():
-#     """a "employee" database on host "db" user "root" passwd "password"."""
-#
-#
-# @when('we execute "src/test/resources/test_db-master/employees.sql"')
-# def we_execute_srctestresourcestest_dbmasteremployeessql():
-#     """we execute "src/test/resources/test_db-master/employees.sql"."""
-
 
 # a "pefval_test" database on host "db" user "root" passwd "password"
 @given(parsers.cfparse('a {database_name} database on host {host} user {user} passwd {passwd}'))

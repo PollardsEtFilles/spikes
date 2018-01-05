@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.6
 
 MAINTAINER PEF <peter@pollardsetfilles.com>
 
@@ -16,3 +16,5 @@ RUN apt-get update
 RUN apt-get install mysql-client -y
 
 RUN rm -rf ~/.cache/pip
+
+CMD [ "python" ]

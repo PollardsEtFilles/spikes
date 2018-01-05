@@ -1,0 +1,69 @@
+
+task pytestbdd(type: Exec) {
+    println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
+    workingDir '.'
+    commandLine 'docker-compose',
+            'run',
+            'test',
+            "bash",
+            "-c",
+            "pip install --trusted-host pypi -r requirements-test.txt && pytest -v --gherkin-terminal-reporter -vv --junit-xml reports/pytest.xml pytest_feature"
+
+}
+pytestbdd.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
+
+task pytest(type: Exec) {
+    println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
+    workingDir '.'
+    commandLine 'docker-compose',
+            'run',
+            'test',
+            "bash",
+            "-c",
+            "pip install --trusted-host pypi -r requirements-test.txt && pytest -v --junit-xml reports/pytest.xml unit"
+
+}
+pytestbdd.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
+
+task behave(type: Exec) {
+    println "Running Python Unit Tests in ${buildDir} as ${System.properties['user.name']}"
+    workingDir '.'
+    commandLine 'docker-compose',
+            'run',
+            'test',
+            "bash",
+            "-c",
+            "pip install --trusted-host pypi -r requirements-test.txt && behave --junit features --junit"
+}
+behave.onlyIf { file('src/main/python').isDirectory() && file('src/test/python').isDirectory() }
+
+task testall(type: Test, dependsOn:[pytest, behave, pytestbdd])
+
+test.dependsOn(testall)
+
+task cleanmain(type:Exec) {
+    workingDir 'src/main/python'
+    commandLine 'bash', '-c', "rm -f *.egg-info && rm -f dist"
+}
+
+task cleantest(type:Exec) {
+    workingDir 'src/test/python'
+    commandLine 'bash', '-c', "rm -f .cache"
+}
+
+task cleanapp(type:Exec) {
+    workingDir 'src/app/python'
+    commandLine 'bash', '-c', "docker rmi pef/pefspikeapp"
+}
+
+task buildmain(type: Exec) {
+    workingDir '.'
+    commandLine 'docker-compose',
+            'run',
+            'main'
+}
+
+task buildapp(type: Exec) {
+    workingDir 'src/app/python'
+    commandLine './build.sh'
+}

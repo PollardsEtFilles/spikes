@@ -1,0 +1,10 @@
+
+[distutils]
+index-servers =
+    internal
+
+[internal]
+repository:http://dockerhost:8080
+username:root
+password:docker
+

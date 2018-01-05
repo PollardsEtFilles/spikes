@@ -8,4 +8,6 @@ setup(name='pefspike',
       author_email='spikes@pollardsetfilles.com',
       license='MIT',
       packages=['pefspike.source', 'pefspike.db'],
-      zip_safe=False)
+      zip_safe=False,
+      install_requires=['mysql-connector-python-rf==2.2.2']
+      )

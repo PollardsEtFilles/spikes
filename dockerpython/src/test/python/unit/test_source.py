@@ -10,7 +10,7 @@ def test_source():
 
     # needs python 3
 
-    asource = Source('src/test/env/env.sh')
+    asource = Source('env/env.sh')
     assert 'some env' in asource.atestenv
     assert 'some env2' in asource.atestenv2
 

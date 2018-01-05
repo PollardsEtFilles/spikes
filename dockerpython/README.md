@@ -4,12 +4,12 @@
 The purpose of this project is to demonstrate how to:
 * use Docker for writing and testing Python code
 * create Python modules with appropriate package naming conventions
+* use setup.py to specify module dependencies
 * upload a Python module to a pypi server
 * write BDD tests using Python Behave
 * write BDD tests using Python pytest
-* run tests in a docker container using gradle
-* run tests in docker compose
-* visualise the test results in Intellij's Idea's test runner
+* run tests with docker compose using gradle
+
 
 As a side benefit it allows PEF to evaluate which BDD framework is appropriate for their tests.
 
@@ -31,7 +31,7 @@ This project contains two sets of code following Java directory conventions that
 
 
 ## Download Database Import File
-cd docker-python
+cd dockerpython/src/test/python
 curl https://codeload.github.com/datacharmer/test_db/zip/master -o master.zip
 unzip master.zip
 
