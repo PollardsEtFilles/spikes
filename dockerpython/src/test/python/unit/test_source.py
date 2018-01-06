@@ -1,7 +1,7 @@
 
 import os
-from pefspike.source import Source
-from pefspike.db import Database
+from dockerpython.source import Source
+from dockerpython.db import Database
 
 
 def test_source():

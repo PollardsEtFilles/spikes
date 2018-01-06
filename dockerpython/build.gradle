@@ -54,7 +54,7 @@ task buildapp(type: Exec) {
 
 task runapp(type: Exec) {
     workingDir '.'
-    commandLine 'bash', '-c', 'docker run --rm pef/pefspikeapp'
+    commandLine 'bash', '-c', 'docker run --rm dockerpython/app'
 }
 
 
@@ -70,10 +70,10 @@ task cleantest(type:Exec) {
 
 task cleanapp(type:Exec) {
     workingDir 'src/app/python'
-    commandLine 'bash', '-c', "docker rmi pef/pefspikeapp"
+    commandLine 'bash', '-c', "docker rmi dockerpython/app"
 }
 
 task cleanpypi(type:Exec) {
     workingDir 'src/app/python'
-    commandLine 'bash', '-c', "rm -rf ~/pypi/pefspike*"
+    commandLine 'bash', '-c', "rm -rf ~/pypi/dockerpython*"
 }

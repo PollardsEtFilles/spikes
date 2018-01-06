@@ -1,7 +1,7 @@
 
 from pytest_bdd import scenario, given, when, then, parsers
 import pytest
-from pefspike.db import Database
+from dockerpython.db import Database
 from hamcrest import *
 import subprocess
 from subprocess import CalledProcessError

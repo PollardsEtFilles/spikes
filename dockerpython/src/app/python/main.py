@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from pefspike.source import Source
+from dockerpython.source import Source
 
 
 if __name__ == '__main__':

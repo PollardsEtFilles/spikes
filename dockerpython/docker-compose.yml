@@ -41,6 +41,6 @@ services:
     #    app:
     #        depends_on:
     #            - pypi
-    #        image: pef/pefspikeapp
+    #        image: dockerpython/app
     #        volumes:
     #            - ./src/app/python:/code
