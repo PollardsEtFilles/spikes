@@ -1,0 +1,13 @@
+
+# from galaxy
+- src: geerlingguy.docker
+- src: geerlingguy.firewall
+- src: geerlingguy.mysql
+- src: geerlingguy.java
+- src: geerlingguy.git
+- src: geerlingguy.jenkins
+- src: geerlingguy.nodejs
+- src: geerlingguy.ntp
+- src: geerlingguy.security
+- src: geerlingguy.repo-epel
+- src: marcelnijenhof.firewalld
