@@ -16,8 +16,14 @@ docker-for-mac as follows:
     kubectl config get-contexts
     kubectl config use-context docker-for-desktop
 
-### Run the UI
-todo
+### Run the Kubernetes UI
+Setup the UI, once only
+
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml
+
+Run the UI, every time you need it. Note. This process doesn't run in the background and ctr-c stops it
+
+    kubectl proxy
 
 ## Build a container and test it works with Docker and Kubernetes
 Go to ../docker/pypiserver
