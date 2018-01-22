@@ -49,9 +49,15 @@ Go to ../docker/pypiserver
     # stop the container with ctrl-c
 
     # start pypi on kubernetes, check its running and test connectivity
-    kubectl run --image=pef/pypi:1.0.0 pypi --port=808 --image-pull-policy=IfNotPresent 
+    kubectl run --image=pef/pypi:1.0.0 pypi --image-pull-policy=IfNotPresent 
     kubectl get pods
-    kubectl port-forward pypi 8080:80
+    # use the full name of pypi, for example
+    
+    kubectl get pods
+    NAME                   READY     STATUS    RESTARTS   AGE
+    pypi-df7b67c87-wlz8b   1/1       Running   0          1m
+    
+    kubectl port-forward pypi-df7b67c87-wlz8b 8080:80
     
     curl http://localhost:8080
     
