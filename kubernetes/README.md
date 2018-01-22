@@ -41,7 +41,7 @@ Go to ../docker/pypiserver
     docker images
 
     # run it interactively with Docker - 
-    docker run -it --rm -p 80:8080 pef/pypi:1.0.0
+    docker run -it --rm -p 8080:80 pef/pypi:1.0.0
 
     # check its running and test in separate terminal
     docker ps
