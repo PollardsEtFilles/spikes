@@ -66,3 +66,12 @@ https://circleci.com/blog/its-the-future/
 http://hokstad.com/docker/patterns
 https://docs.docker.com
 https://docs.continuum.io/anaconda/pkg-docs
+http://docs.projectatomic.io/container-best-practices/
+https://lebkowski.name/docker-volumes/
+https://github.com/geerlingguy/ansible-role-docker
+
+### Security
+https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b
+https://www.infoworld.com/article/3154711/security/8-docker-security-rules-to-live-by.html
+https://sysdig.com/blog/7-docker-security-vulnerabilities/
+https://docs.docker.com/engine/installation/linux/linux-postinstall/
