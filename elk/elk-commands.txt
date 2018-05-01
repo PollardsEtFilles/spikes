@@ -1,0 +1,102 @@
+curl -X PUT "localhost:9200/_ingest/pipeline/attachment" -H 'Content-Type: application/json' -d'
+{
+  "description" : "Extract attachment information",
+  "processors" : [
+    {
+      "attachment" : {
+        "field" : "data"
+      }
+    }
+  ]
+}
+'
+curl -X PUT "localhost:9200/my_index/my_type/my_id?pipeline=attachment" -H 'Content-Type: application/json' -d'
+{
+  "data": "e1xydGYxXGFuc2kNCkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0DQpccGFyIH0="
+}
+'
+curl -X GET "localhost:9200/my_index/my_type/my_id"
+
+curl -X PUT "localhost:9200/my_index/my_type/my_id?pipeline=attachment" -H 'Content-Type: application/json' -d'
+{
+  "data": "e1xydGYxXGFuc2kNCkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0DQpccGFyIH0=",
+  "date": "2018-05-01",
+  "url": "http://gasci.com/blah"
+}
+'
+
+curl -X PUT "localhost:9200/my_index/my_type/my_id?pipeline=attachment" -H 'Content-Type: application/json' -d'
+{
+  "data": "e1xydGYxXGFuc2kNCkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0DQpccGFyIH0=",
+  "date": "2018-05-01",
+  "url": "http://gasci.com/blah"
+}
+'
+
+
+
+curl -O "http://www.gasci.com/results/current.htm"
+cat <<EOF > msg.out
+{
+  "data": "$(base64 current.htm)",
+  "date": "2018-05-01",
+  "url": "http://www.gasci.com/results/current.htm"
+}
+EOF
+curl -X PUT "localhost:9200/my_index/my_type/my_id2?pipeline=attachment" -H 'Content-Type: application/json' -d @msg.out
+
+curl -o news.html  "http://www.gasci.com/news.htm"
+cat <<EOF > msg.out
+{
+  "data": "$(base64 news.html)",
+  "date": "2018-05-01",
+  "url": "http://www.gasci.com/results/current.htm"
+}
+EOF
+curl -X PUT "localhost:9200/my_index/my_type/my_id3?pipeline=attachment" -H 'Content-Type: application/json' -d @msg.out
+
+curl -o notice  http://www.stockex.co.tt/read.php?ContentID=12588
+cat <<EOF > msg.out
+{
+  "data": "$(base64 notice)",
+  "date": "2018-05-01",
+  "url": "http://www.stockex.co.tt/read.php?ContentID=12588"
+}
+EOF
+curl -X PUT "localhost:9200/my_index/my_type/my_id4?pipeline=attachment" -H 'Content-Type: application/json' -d @msg.out
+
+
+  34  sudo bin/elasticsearch-plugin list
+   35  sudo bin/elasticsearch-plugin
+   36  sudo bin/elasticsearch-plugin install ingest-attachment
+   37  sudo bin/elasticsearch-plugin list
+  116  sudo bin/elasticsearch-plugin list
+  125  sudo /opt/bitnami/ctlscript.sh stop elasticsearch
+  126  sudo /opt/bitnami/ctlscript.sh start elasticsearch
+  140  curl -X GET "localhost:9200/my_index/my_type/my_id"
+  141  curl -X GET "localhost:9200/my_index/my_type/my_id?pretty"
+  188  curl -X GET "localhost:9200/my_index/my_type/my_id"
+  189  curl -X GET "localhost:9200/my_index/my_type/my_id/data"
+  190  curl -X GET "localhost:9200/my_index/my_type/my_id.data"
+  191  curl -X GET "localhost:9200/my_index/my_type/my_id?pretty"
+  192  curl -X GET "localhost:9200/my_index/my_type/my_id/data"
+  193  curl -X GET "localhost:9200/my_index/my_type/my_id/_source/data"
+  194  curl -X GET "localhost:9200/my_index/my_type/my_id/_source.data"
+  195  curl -X GET "localhost:9200/my_index/my_type/my_id/_source"
+  196  curl -X GET "localhost:9200/my_index/my_type/my_id/_source=data"
+  197  curl -X GET "localhost:9200/my_index/my_type/my_id/_source_include=data"
+  198  curl -X GET "localhost:9200/my_index/my_type/my_id/_source"
+  199  curl -X GET "localhost:9200/my_index/my_type/my_id/_source?pretty"
+  200  curl -X GET "localhost:9200/my_index/my_type/my_id/_source_include"
+  201  curl -X GET "localhost:9200/my_index/my_type/my_id?_source_include"
+  202  curl -X GET "localhost:9200/my_index/my_type/my_id?_source"
+  203  curl -X GET "localhost:9200/my_index/my_type/my_id?_source_include=data"
+  204  curl -X GET "localhost:9200/my_index/my_type/my_id?_source=data"
+  205  curl -X GET "localhost:9200/my_index/my_type/my_id?stored_fields=data"
+  206  curl -X GET "localhost:9200/my_index/my_type/my_id?stored_fields=data?pretty"
+  207  curl -X GET "localhost:9200/my_index/my_type/my_id/stored_fields=data?pretty"
+  208  curl -X GET "localhost:9200/my_index/my_type/my_id?stored_fields=data?pretty"
+  209  curl -X GET "localhost:9200/my_index/my_type/my_id?_source?_source_include=data"
+  210  curl -X GET "localhost:9200/my_index/my_type/my_id/_source?_source_include=data"
+                                                                                
+
