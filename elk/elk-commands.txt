@@ -1,3 +1,9 @@
+see https://www.elastic.co/guide/en/elasticsearch/plugins/current/ingest-attachment.html
+
+/Applications/elk-6.2.4-0/elasticsearch/bin/elasticsearch-plugin install ingest-attachment
+And restart each ES node
+
+
 curl -X PUT "localhost:9200/_ingest/pipeline/attachment" -H 'Content-Type: application/json' -d'
 {
   "description" : "Extract attachment information",
@@ -33,8 +39,6 @@ curl -X PUT "localhost:9200/my_index/my_type/my_id?pipeline=attachment" -H 'Cont
 }
 '
 
-
-
 curl -O "http://www.gasci.com/results/current.htm"
 cat <<EOF > msg.out
 {
@@ -50,20 +54,30 @@ cat <<EOF > msg.out
 {
   "data": "$(base64 news.html)",
   "date": "2018-05-01",
-  "url": "http://www.gasci.com/results/current.htm"
+  "url": "http://www.gasci.com/news.htm"
 }
 EOF
 curl -X PUT "localhost:9200/my_index/my_type/my_id3?pipeline=attachment" -H 'Content-Type: application/json' -d @msg.out
 
-curl -o notice  http://www.stockex.co.tt/read.php?ContentID=12588
+curl -o notice.pdf  http://www.stockex.co.tt/read.php?ContentID=12588
 cat <<EOF > msg.out
 {
-  "data": "$(base64 notice)",
+  "data": "$(base64 notice.pdf)",
   "date": "2018-05-01",
   "url": "http://www.stockex.co.tt/read.php?ContentID=12588"
 }
 EOF
 curl -X PUT "localhost:9200/my_index/my_type/my_id4?pipeline=attachment" -H 'Content-Type: application/json' -d @msg.out
+
+curl -X GET -o fpml.xml "http://www.fpml.org/spec/fpml-5-9-2-wd-2/html/confirmation/xml/business-processes/execution-advice/msg-ex53-execution-advice-trade-partial-novation-correction-C02-10.xml"
+cat <<EOF > msg.out
+{
+  "data": "$(base64 fpml.xml)",
+  "date": "2018-05-01",
+  "url": "http://www.fpml.org/spec/fpml-5-9-2-wd-2/html/confirmation/xml/business-processes/execution-advice/msg-ex53-execution-advice-trade-partial-novation-correction-C02-10.xml"
+}
+EOF
+curl -X PUT "localhost:9200/my_index/my_type/my_id5?pipeline=attachment" -H 'Content-Type: application/json' -d @msg.out
 
 
   34  sudo bin/elasticsearch-plugin list
