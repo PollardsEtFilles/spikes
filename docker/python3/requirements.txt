@@ -5,7 +5,7 @@ mysql-connector-python-rf==2.2.2
 python-dateutil
 pytz==2017.3
 
-numpy==1.13.3
+numpy==1.19
 pandas==0.21.0
 
 six
